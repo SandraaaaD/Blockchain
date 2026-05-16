@@ -1,0 +1,20 @@
+# Local secrets — never commit keypairs or env files with mnemonics
+solana-keys/
+**/phantom*.json
+**/from-mnemonic.json
+**/recovered*.json
+**/*-keypair.json
+keypair.json
+freelancer.json
+escrow_simple/keys/
+.env
+.env.*
+
+# IDE / Python / JS build noise
+.idea/
+__pycache__/
+.venv/
+**/node_modules/
+dist/
+**/target/
+*.so

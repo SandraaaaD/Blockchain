@@ -1,0 +1,70 @@
+Escrow demo: business + freelancer + 0.01 SOL
+=============================================
+
+Your pubkey G4WBt6GJF9zpqf6EJXvesnPCuLJwcK3gFx2gDWLW8KA5 is only the ADDRESS.
+You must sign txs with the SECRET KEY FILE that matches it (e.g. Phantom export as JSON, or Solana CLI id.json).
+
+Important
+---------
+- Use DEVNET first (free airdrop). Mainnet costs real SOL and your program must be deployed there.
+- You need TWO different wallets: business (you) and freelancer (new keypair).
+- This repo program id is in declare_id + Anchor.toml — deploy it to the same cluster you use.
+
+1) Install (once): Rust, Solana CLI, Anchor, Node — see earlier instructions.
+
+2) Point Solana CLI at devnet (recommended):
+   solana config set --url https://api.devnet.solana.com
+
+   If your G4WB... wallet file is your default keypair:
+   solana address   (should match G4WB...)
+
+3) Create freelancer wallet:
+   solana-keygen new --outfile freelancer.json --no-bip39-passphrase
+
+   Fund it for tx fees (devnet):
+   solana airdrop 1 $(solana-keygen pubkey freelancer.json)
+
+   Or from business wallet:
+   solana transfer $(solana-keygen pubkey freelancer.json) 0.05 --allow-unfunded-recipient
+
+4) Build + deploy program to devnet (from folder ...\blockchain\solana):
+   anchor build
+   anchor deploy --provider.cluster devnet
+
+   If deploy prints a different program id, run:
+   anchor keys sync --provider.cluster devnet
+   …then rebuild/redeploy so declare_id matches.
+
+5) Install JS deps:
+   npm install
+
+6) Optional: put requirements text in a file, e.g. requirements.txt
+
+7) Run the full flow (business = default id.json unless BUSINESS_KEYPAIR is set):
+   set FREELANCER_KEYPAIR=freelancer.json
+   set RPC_URL=https://api.devnet.solana.com
+   set REQUIREMENTS_FILE=requirements.txt
+   npm run escrow:run
+
+   PowerShell example:
+   $env:FREELANCER_KEYPAIR="freelancer.json"
+   $env:RPC_URL="https://api.devnet.solana.com"
+   npm run escrow:run
+
+   If business keypair is not default path:
+   $env:BUSINESS_KEYPAIR="C:\path\to\business-keypair.json"
+
+8) Same PROJECT_ID + same business+freelancer cannot create twice. Bump:
+   $env:PROJECT_ID="2"
+
+Mainnet (only after devnet works)
+---------------------------------
+- solana config set --url mainnet-beta
+- Fund freelancer with a little SOL for fees.
+- anchor deploy --provider.cluster mainnet-beta
+- Set RPC_URL to a mainnet RPC you trust.
+- npm run escrow:run with same env vars.
+
+Rent note
+---------
+The escrow PDA keeps a small rent reserve; payout is "balance minus rent-exempt minimum", so freelancer receives slightly less than exactly 0.01 SOL in lamports.

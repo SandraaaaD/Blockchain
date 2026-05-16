@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Escrow palette — GoPidge-style dark: ink base + luminous aqua/cyan wells (purple → your blues) */
+@layer utilities {
+  .bg-brand-flow {
+    background-color: #060d1f;
+    background-image:
+      /* top-right: vivid aqua glow */
+      radial-gradient(ellipse 95% 75% at 88% -15%, rgb(10 196 224 / 0.38), transparent 48%),
+      /* centre-top: sea blue */
+      radial-gradient(ellipse 65% 45% at 55% 5%, rgb(9 146 194 / 0.22), transparent 55%),
+      /* left: deep navy pool */
+      radial-gradient(ellipse 80% 65% at -8% 32%, rgb(11 45 114 / 0.58), transparent 60%),
+      /* bottom-right: deep anchor */
+      radial-gradient(ellipse 85% 70% at 100% 95%, rgb(11 45 114 / 0.72), transparent 52%),
+      /* bottom-left: soft aqua hint */
+      radial-gradient(ellipse 55% 45% at 8% 95%, rgb(10 196 224 / 0.14), transparent 55%),
+      /* warm sand accent centre */
+      radial-gradient(ellipse 70% 55% at 50% 50%, rgb(246 231 188 / 0.04), transparent 65%),
+      linear-gradient(165deg, rgb(6 13 31) 0%, rgb(8 18 56 / 0.88) 50%, rgb(5 10 24) 100%);
+  }
+
+  .bg-brand-veil {
+    background:
+      radial-gradient(ellipse 80% 60% at 72% -8%, rgb(10 196 224 / 0.14), transparent 52%),
+      radial-gradient(ellipse 65% 50% at 15% 92%, rgb(246 231 188 / 0.06), transparent 58%);
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    @apply scroll-smooth antialiased;
+    color-scheme: light dark;
+  }
+  body {
+    @apply font-sans text-slate-100 transition-colors duration-300 motion-reduce:transition-none;
+    text-rendering: optimizeLegibility;
+    background: transparent;
+  }
+
+  ::selection {
+    background-color: rgb(10 196 224 / 0.38);
+    @apply text-escrow-deep dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl font-semibold tracking-tight text-white
+      bg-gradient-to-r from-escrow-deep via-escrow-sea to-escrow-aqua
+      shadow-soft shadow-[0_10px_36px_-8px_rgb(10,196,224,0.38)]
+      ring-1 ring-inset ring-white/20
+      hover:brightness-110 hover:shadow-[0_14px_48px_-10px_rgb(10,196,224,0.45)]
+      dark:shadow-soft-dark dark:shadow-[0_12px_44px_-10px_rgb(10,196,224,0.28)]
+      dark:hover:shadow-[0_16px_52px_-8px_rgb(10,196,224,0.38)]
+      dark:hover:brightness-110
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100
+      disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-slate-800/70 text-slate-200 backdrop-blur-md
+      border border-white/[0.08] hover:bg-slate-700/70 hover:border-escrow-aqua/40 hover:text-white
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-soft hover:shadow-md
+      dark:shadow-soft-dark dark:hover:shadow-elevated-dark
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .btn-success {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-gradient-to-r from-escrow-sea to-escrow-deep text-white shadow-soft hover:brightness-105 hover:shadow-md
+      dark:shadow-soft-dark
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-white/[0.08] bg-slate-900/50 px-4 py-2.5 text-slate-100
+      placeholder:text-slate-500 shadow-sm backdrop-blur-md
+      focus:outline-none focus:ring-2 focus:ring-escrow-aqua/40 focus:border-escrow-aqua/55
+      transition duration-200;
+  }
+  .card {
+    @apply rounded-2xl border border-white/[0.07] bg-slate-900/55 p-6 shadow-soft backdrop-blur-xl
+      ring-1 ring-escrow-aqua/18;
+  }
+  .card-interactive {
+    @apply card transition-all duration-300 ease-out
+      hover:border-escrow-aqua/35 hover:bg-slate-900/70 hover:shadow-elevated-dark hover:-translate-y-0.5
+      motion-reduce:hover:translate-y-0;
+  }
+  .badge {
+    @apply inline-flex items-center px-3 py-0.5 rounded-full text-xs font-semibold tracking-wide
+      ring-1 ring-inset ring-white/10;
+  }
+  .text-gradient {
+    background-image: linear-gradient(
+      105deg,
+      #ffffff 0%,
+      rgb(240 250 252) 36%,
+      #0ac4e0 70%,
+      rgb(246 231 188 / 0.95) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

@@ -1,0 +1,1 @@
+# No special flags needed; the vendor patch guards source_file() correctly.

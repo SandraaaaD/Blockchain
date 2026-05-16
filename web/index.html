@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Contracts — Design, deploy, operate</title>
+  <style>
+    :root {
+      --bg: #070b12;
+      --surface: #0f1624;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e8edf7;
+      --muted: #8b98ad;
+      --accent: #3ee0b3;
+      --accent-dim: rgba(62, 224, 179, 0.15);
+      --warn: #f0c674;
+      --radius: 14px;
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, "Cascadia Code", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, #152238 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(7, 11, 18, 0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: 1.05rem;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    .hero {
+      padding: 2rem 0 3rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .hero p.lead {
+      color: var(--muted);
+      font-size: 1.125rem;
+      max-width: 36rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(62, 224, 179, 0.35);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #042218;
+      box-shadow: 0 8px 28px rgba(62, 224, 179, 0.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 36px rgba(62, 224, 179, 0.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    section {
+      margin-top: 3.5rem;
+    }
+
+    section h2 {
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    section > p.section-intro {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      max-width: 52rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .card code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      display: block;
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      color: #c5d4f0;
+      overflow-x: auto;
+    }
+
+    .steps {
+      display: grid;
+      gap: 1rem;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      font-weight: 700;
+      font-size: 0.85rem;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .notice {
+      margin-top: 2rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(240, 198, 116, 0.35);
+      background: rgba(240, 198, 116, 0.08);
+      color: #e8dcc4;
+      font-size: 0.92rem;
+    }
+
+    footer {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer p + p {
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="logo">chain<span>forge</span></div>
+      <div class="nav-links">
+        <a href="#basics">Basics</a>
+        <a href="#lifecycle">Lifecycle</a>
+        <a href="#patterns">Patterns</a>
+        <a href="#security">Security</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="pill-row">
+        <span class="pill">Solidity</span>
+        <span class="pill">EVM</span>
+        <span class="pill">Audits &amp; tooling</span>
+      </div>
+      <h1>Ship smart contracts with clarity—from idea to mainnet.</h1>
+      <p class="lead">
+        A compact reference hub for designing, testing, and operating on-chain programs.
+        Use it as a checklist before you deploy real value.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#lifecycle">Follow the lifecycle</a>
+        <a class="btn btn-ghost" href="#security">Read security notes</a>
+      </div>
+    </div>
+
+    <section id="basics">
+      <h2>What is a smart contract?</h2>
+      <p class="section-intro">
+        A smart contract is deterministic code stored on a blockchain. Anyone can verify its logic;
+        transactions invoke functions and change state according to the rules you encoded—no middle party required.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <h3>Immutable by default</h3>
+          <p>
+            Deployed bytecode is fixed unless you built in upgrade patterns (proxies). Plan migrations and versioning up front.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Gas &amp; execution limits</h3>
+          <p>
+            Every opcode costs gas. Loops, storage writes, and external calls dominate bills—profile before shipping.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Trust boundaries</h3>
+          <p>
+            Contracts interact with EOAs, other contracts, or oracles. Assume malicious callers and untrusted inputs.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="lifecycle">
+      <h2>Lifecycle</h2>
+      <p class="section-intro">
+        A disciplined pipeline catches bugs early—cheaper than an incident on chain.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <div>
+            <strong>Specify</strong>
+            <span>Threat model, roles, invariants, and failure modes (pause, upgrade, migration).</span>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Implement</strong>
+            <span>Solidity with checks-effects-interactions, custom errors, and minimal external calls.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Verify</strong>
+            <span>Unit tests, fuzzing, static analysis, formal specs where justified.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <strong>Deploy</strong>
+            <span>Scripted deployments, verified sources, monitored events, and incident runbooks.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="patterns">
+      <h2>Common patterns</h2>
+      <p class="section-intro">
+        Building blocks you will recognize across production systems—know them before you customize.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <h3>ERC-20 token</h3>
+          <p>Fungible balances with <code>transfer</code>, <code>approve</code>, and allowance mechanics.</p>
+          <code>interface IERC20 { function transfer(address to, uint256 v) external returns (bool); }</code>
+        </article>
+        <article class="card">
+          <h3>Access control</h3>
+          <p>
+            Role-based guards (<code>onlyRole</code>), Ownable patterns, or timelocked admins—never leave privileged calls wide open.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Pull over push</h3>
+          <p>
+            Let users withdraw funds instead of pushing Ether to arbitrary addresses—avoids reentrancy and griefing.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="security">
+      <h2>Security checklist</h2>
+      <p class="section-intro">
+        Non-exhaustive reminders—pair with professional review for anything holding real assets.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <h3>Reentrancy</h3>
+          <p>Use checks-effects-interactions; consider reentrancy guards for external calls.</p>
+        </article>
+        <article class="card">
+          <h3>Integer math</h3>
+          <p>Solidity 0.8+ has built-in overflow checks; still watch casting and assembly.</p>
+        </article>
+        <article class="card">
+          <h3>Oracle risk</h3>
+          <p>Spot prices can be manipulated—use TWAPs, multiple sources, or circuit breakers.</p>
+        </article>
+      </div>
+      <div class="notice">
+        <strong style="color: var(--warn)">Disclaimer:</strong>
+        This page is educational only—not legal, financial, or security advice. Test on networks meant for testing;
+        never deploy unaudited code with user funds.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built as a static starter—swap branding, add docs links, or wire a wallet demo when you are ready.</p>
+    <p>Run <code style="font-family: ui-monospace, monospace">python serve_site.py</code> from the project root to preview locally.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,3 @@
+anchorpy==0.20.1
+solana==0.34.3
+solders==0.21.0
