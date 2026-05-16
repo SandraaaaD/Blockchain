@@ -5,8 +5,6 @@ import { registerApi } from '../../api/auth';
 import type { UserRole } from '../../types';
 import toast from 'react-hot-toast';
 import { User, Code2 } from 'lucide-react';
-import ThemeToggle from '../../components/ThemeToggle';
-
 export default function RegisterPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -56,9 +54,6 @@ export default function RegisterPage() {
         aria-hidden
       />
       <div className="pointer-events-none fixed inset-0 z-[2] bg-brand-veil" aria-hidden />
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 motion-safe:animate-fade-rise motion-reduce:animate-none">
-        <ThemeToggle />
-      </div>
       <div className="w-full max-w-md relative z-20 motion-safe:animate-fade-rise motion-reduce:animate-none">
         <div className="text-center mb-8">
           <div className="inline-flex mb-4 h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-escrow-deep via-escrow-sea to-escrow-aqua text-lg font-bold text-white shadow-glow ring-1 ring-white/30 motion-safe:hover:scale-[1.03] transition-transform duration-300 dark:shadow-glow-dark">

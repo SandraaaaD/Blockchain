@@ -31,21 +31,21 @@ export default function MilestoneSubmitModal({ milestone, onClose, onSuccess }: 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg shadow-xl">
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-slate-900 border border-white/[0.08] rounded-2xl w-full max-w-lg shadow-2xl ring-1 ring-escrow-aqua/15">
+        <div className="flex items-center justify-between p-6 border-b border-white/[0.07]">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">Submit Milestone</h2>
-            <p className="text-sm text-gray-500 mt-0.5">{milestone.title}</p>
+            <h2 className="text-lg font-bold text-white">Submit Milestone</h2>
+            <p className="text-sm text-slate-400 mt-0.5">{milestone.title}</p>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100">
+          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800/70 transition-colors">
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1.5">
+            <label className="flex items-center gap-1.5 text-sm font-medium text-slate-300 mb-1">
               <Code2 size={14} /> GitHub Repository
             </label>
             <input
@@ -58,7 +58,7 @@ export default function MilestoneSubmitModal({ milestone, onClose, onSuccess }: 
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1.5">
+            <label className="flex items-center gap-1.5 text-sm font-medium text-slate-300 mb-1">
               <Link2 size={14} /> Demo Link
             </label>
             <input
@@ -71,7 +71,7 @@ export default function MilestoneSubmitModal({ milestone, onClose, onSuccess }: 
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+            <label className="block text-sm font-medium text-slate-300 mb-1">Notes</label>
             <textarea
               rows={3}
               className="input-field"
@@ -82,7 +82,7 @@ export default function MilestoneSubmitModal({ milestone, onClose, onSuccess }: 
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
+            <label className="flex items-center gap-1.5 text-sm font-medium text-slate-300 mb-2">
               <Upload size={14} /> Attachments
             </label>
             <input
@@ -95,7 +95,7 @@ export default function MilestoneSubmitModal({ milestone, onClose, onSuccess }: 
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="w-full border-2 border-dashed border-gray-200 rounded-xl p-4 text-center text-sm text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors"
+              className="w-full border-2 border-dashed border-white/10 rounded-xl p-4 text-center text-sm text-slate-400 hover:border-escrow-aqua/40 hover:text-escrow-aqua transition-colors"
             >
               {files.length > 0
                 ? `${files.length} file(s) selected`

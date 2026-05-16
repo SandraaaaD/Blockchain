@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { loginApi } from '../../api/auth';
 import toast from 'react-hot-toast';
-import ThemeToggle from '../../components/ThemeToggle';
-
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -44,9 +42,6 @@ export default function LoginPage() {
         aria-hidden
       />
       <div className="pointer-events-none fixed inset-0 z-[2] bg-brand-veil" aria-hidden />
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 motion-safe:animate-fade-rise motion-reduce:animate-none">
-        <ThemeToggle />
-      </div>
       <div className="w-full max-w-md relative z-20 motion-safe:animate-fade-rise motion-reduce:animate-none">
         <div className="text-center mb-8">
           <div className="inline-flex mb-5 h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-escrow-deep via-escrow-sea to-escrow-aqua text-xl font-bold text-white shadow-glow ring-1 ring-white/40 transition-[transform,box-shadow] duration-300 motion-safe:hover:scale-[1.02] dark:shadow-glow-dark">

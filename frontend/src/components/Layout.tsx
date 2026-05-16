@@ -3,8 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { usePhantom } from '../context/PhantomContext';
 import { ExternalLink, LogOut, LayoutDashboard, FolderOpen, Wallet } from 'lucide-react';
 import NotificationBell from './NotificationBell';
-import ThemeToggle from './ThemeToggle';
-
 function formatWalletChip(addr: string) {
   if (addr.length <= 10) return addr;
   return `${addr.slice(0, 4)}…${addr.slice(-4)}`;
@@ -40,8 +38,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       className={`group relative flex items-center gap-2 text-sm font-semibold rounded-full px-4 py-2 overflow-hidden transition-all duration-300 ease-out
         motion-reduce:transition-colors ${
           active
-            ? 'bg-escrow-aqua/22 text-escrow-deep shadow-sm shadow-escrow-sea/20 ring-1 ring-escrow-sea/45 dark:bg-escrow-aqua/18 dark:text-escrow-sand dark:shadow-glow-dark dark:ring-escrow-aqua/38'
-            : 'text-slate-600 hover:text-escrow-deep hover:bg-white/88 hover:ring-escrow-sea/35 hover:shadow-sm hover:ring-1 dark:text-slate-400 dark:hover:text-escrow-sand dark:hover:bg-slate-950/55 dark:hover:ring-escrow-aqua/28'
+            ? 'bg-escrow-aqua/18 text-escrow-sand shadow-sm ring-1 ring-escrow-aqua/35'
+            : 'text-slate-400 hover:text-white hover:bg-slate-700/60 hover:ring-1 hover:ring-white/10'
         }`}
     >
       <span className="absolute inset-x-5 -bottom-px h-px bg-gradient-to-r from-transparent via-escrow-aqua to-transparent opacity-0 transition-opacity motion-reduce:opacity-0 group-hover:opacity-80 group-hover:motion-safe:animate-pulse dark:via-escrow-sand" />
@@ -58,17 +56,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         aria-hidden
       />
       <div className="pointer-events-none fixed inset-0 z-[2] overflow-hidden bg-brand-veil" aria-hidden>
+        {/* top-right aqua glow */}
         <div
-          className="absolute -top-32 right-[2%] h-[32rem] w-[32rem] rounded-full bg-escrow-aqua/32 blur-[140px] motion-safe:animate-float motion-reduce:animate-none dark:bg-escrow-aqua/12"
+          className="absolute -top-24 right-[4%] h-[36rem] w-[36rem] rounded-full bg-escrow-aqua/28 blur-[160px] motion-safe:animate-float motion-reduce:animate-none"
           style={{ animationDelay: '-2s' }}
         />
-        <div className="absolute top-[12%] left-[-12%] h-[20rem] w-[20rem] rounded-full bg-escrow-deep/52 blur-[130px] motion-safe:animate-float motion-reduce:animate-none [animation-duration:32s] dark:bg-escrow-deep/38" />
-        <div className="absolute bottom-[-22%] left-[-18%] h-[26rem] w-[26rem] rounded-full bg-escrow-sand/22 blur-[115px] motion-safe:animate-float motion-reduce:animate-none [animation-duration:34s] [animation-delay:-14s] dark:bg-escrow-sand/04" />
-        <div className="absolute top-[40%] left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-escrow-sea/16 blur-[105px] motion-safe:animate-float motion-reduce:animate-none [animation-delay:-8s] dark:bg-escrow-sea/06" />
+        {/* left deep navy pool */}
+        <div className="absolute top-[8%] left-[-10%] h-[24rem] w-[24rem] rounded-full bg-escrow-deep/55 blur-[140px] motion-safe:animate-float motion-reduce:animate-none [animation-duration:32s]" />
+        {/* bottom-left sea glow */}
+        <div className="absolute bottom-[-15%] left-[-8%] h-[28rem] w-[28rem] rounded-full bg-escrow-sea/22 blur-[130px] motion-safe:animate-float motion-reduce:animate-none [animation-duration:38s] [animation-delay:-18s]" />
+        {/* centre sand warmth */}
+        <div className="absolute top-[45%] left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-escrow-sand/08 blur-[120px] motion-safe:animate-float motion-reduce:animate-none [animation-delay:-8s]" />
       </div>
 
       <div className="relative z-10 flex flex-col flex-1 min-h-screen">
-        <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-black/35 shadow-sm backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-300 supports-[backdrop-filter]:bg-black/28 shadow-[0_8px_32px_-12px_rgba(10,196,224,0.12)]">
+        <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-slate-900/60 shadow-sm backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-300 supports-[backdrop-filter]:bg-slate-900/50 shadow-[0_8px_32px_-12px_rgba(10,196,224,0.18)]">
           <div
             className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-escrow-aqua/45 to-transparent opacity-85 motion-safe:animate-pulse-glow motion-reduce:opacity-50 dark:via-escrow-aqua/35"
             aria-hidden
@@ -92,7 +94,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </Link>
 
-              <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/52 ring-1 ring-escrow-sea/32 backdrop-blur-md dark:bg-slate-950/48 dark:ring-escrow-aqua/22">
+              <nav className="hidden md:flex items-center gap-1 p-1 rounded-full bg-slate-800/60 ring-1 ring-white/[0.06] backdrop-blur-md">
                 {navTab(
                   dashboardPath,
                   location.pathname === dashboardPath,
@@ -164,7 +166,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <span className="sm:hidden">{connecting ? '…' : 'Wallet'}</span>
                   </button>
                 )}
-                <ThemeToggle />
                 <NotificationBell />
                 <div className="text-right hidden sm:block pl-2">
                   <p className="text-sm font-semibold text-slate-900 leading-tight dark:text-slate-100">
