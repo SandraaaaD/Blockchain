@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Escrow palette — GoPidge-style dark: ink base + luminous aqua/cyan wells (purple → your blues) */
+@layer utilities {
+  .bg-brand-flow {
+    background-color: #00020c;
+    background-image:
+      radial-gradient(
+        ellipse 100% 80% at 82% -20%,
+        rgb(10 196 224 / 0.18),
+        transparent 42%
+      ),
+      radial-gradient(ellipse 70% 50% at 58% 8%, rgb(9 146 194 / 0.09), transparent 58%),
+      radial-gradient(
+        ellipse 85% 70% at -10% 28%,
+        rgb(11 45 114 / 0.38),
+        transparent 62%
+      ),
+      radial-gradient(ellipse 90% 75% at 100% 100%, rgb(11 45 114 / 0.62), transparent 48%),
+      radial-gradient(ellipse 60% 50% at 10% 100%, rgb(10 196 224 / 0.06), transparent 58%),
+      linear-gradient(180deg, rgb(0 2 12) 0%, rgb(8 24 72 / 0.28) 48%, rgb(0 1 8) 100%);
+  }
+
+  html.dark .bg-brand-flow {
+    background-color: #000208;
+    background-image:
+      radial-gradient(
+        ellipse 100% 80% at 82% -20%,
+        rgb(10 196 224 / 0.16),
+        transparent 40%
+      ),
+      radial-gradient(ellipse 70% 50% at 58% 8%, rgb(9 146 194 / 0.07), transparent 58%),
+      radial-gradient(
+        ellipse 85% 70% at -10% 28%,
+        rgb(11 45 114 / 0.32),
+        transparent 62%
+      ),
+      radial-gradient(ellipse 90% 75% at 100% 100%, rgb(11 45 114 / 0.58), transparent 48%),
+      radial-gradient(ellipse 60% 50% at 10% 100%, rgb(10 196 224 / 0.05), transparent 58%),
+      radial-gradient(
+        ellipse 95% 60% at 50% 50%,
+        rgb(246 231 188 / 0.02),
+        transparent 68%
+      ),
+      linear-gradient(180deg, rgb(0 2 8) 0%, rgb(8 26 74 / 0.22) 48%, rgb(0 1 5) 100%);
+  }
+
+  .bg-brand-veil {
+    background:
+      radial-gradient(ellipse 90% 70% at 70% -10%, rgb(10 196 224 / 0.1), transparent 55%),
+      radial-gradient(ellipse 80% 60% at 20% 100%, rgb(246 231 188 / 0.06), transparent 60%);
+  }
+
+  html.dark .bg-brand-veil {
+    background:
+      radial-gradient(ellipse 75% 55% at 65% -5%, rgb(10 196 224 / 0.07), transparent 58%),
+      radial-gradient(
+        ellipse 70% 50% at 18% 88%,
+        rgb(246 231 188 / 0.025),
+        transparent 62%
+      );
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    @apply scroll-smooth antialiased;
+    color-scheme: light dark;
+  }
+  body {
+    @apply font-sans text-slate-100 transition-colors duration-300 motion-reduce:transition-none;
+    text-rendering: optimizeLegibility;
+    background: transparent;
+  }
+
+  ::selection {
+    background-color: rgb(10 196 224 / 0.38);
+    @apply text-escrow-deep dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl font-semibold tracking-tight text-white
+      bg-gradient-to-r from-escrow-deep via-escrow-sea to-escrow-aqua
+      shadow-soft shadow-[0_10px_36px_-8px_rgb(10,196,224,0.38)]
+      ring-1 ring-inset ring-white/20
+      hover:brightness-110 hover:shadow-[0_14px_48px_-10px_rgb(10,196,224,0.45)]
+      dark:shadow-soft-dark dark:shadow-[0_12px_44px_-10px_rgb(10,196,224,0.28)]
+      dark:hover:shadow-[0_16px_52px_-8px_rgb(10,196,224,0.38)]
+      dark:hover:brightness-110
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100
+      disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-black/42 text-slate-100 backdrop-blur-md
+      border border-escrow-aqua/28 hover:bg-black/60 hover:border-escrow-aqua/45 hover:shadow-soft
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-soft hover:shadow-md
+      dark:shadow-soft-dark dark:hover:shadow-elevated-dark
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .btn-success {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold
+      bg-gradient-to-r from-escrow-sea to-escrow-deep text-white shadow-soft hover:brightness-105 hover:shadow-md
+      dark:shadow-soft-dark
+      active:scale-[0.98] transition-all duration-200 motion-reduce:active:scale-100;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-white/10 bg-black/38 px-4 py-2.5 text-slate-50
+      placeholder:text-slate-500 shadow-sm backdrop-blur-md
+      focus:outline-none focus:ring-2 focus:ring-escrow-aqua/38 focus:border-escrow-aqua/50
+      transition duration-200;
+  }
+  .card {
+    @apply rounded-2xl border border-white/10 bg-black/38 p-6 shadow-soft backdrop-blur-xl
+      ring-1 ring-escrow-aqua/22;
+  }
+  .dark .card {
+    @apply border-white/10 bg-black/35 shadow-soft-dark ring-1 ring-escrow-aqua/22 backdrop-blur-2xl;
+  }
+  .card-interactive {
+    @apply card transition-all duration-300 ease-out
+      hover:border-escrow-aqua/40 hover:bg-black/52 hover:shadow-elevated hover:-translate-y-0.5
+      motion-reduce:hover:translate-y-0;
+  }
+  .dark .card-interactive:hover {
+    @apply border-escrow-aqua/40 shadow-elevated-dark -translate-y-0.5 bg-black/50 backdrop-blur-2xl;
+  }
+  .badge {
+    @apply inline-flex items-center px-3 py-0.5 rounded-full text-xs font-semibold tracking-wide
+      ring-1 ring-inset ring-white/10;
+  }
+  .text-gradient {
+    background-image: linear-gradient(
+      105deg,
+      #ffffff 0%,
+      rgb(240 250 252) 36%,
+      #0ac4e0 70%,
+      rgb(246 231 188 / 0.95) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

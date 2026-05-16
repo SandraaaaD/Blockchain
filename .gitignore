@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+**/dist/
+**/build/
+target/
+
+# Environment files - DO NOT COMMIT SECRETS
+.env
+.env.local
+.env.*.local
+backend-node/.env
+frontend/.env.local
+frontend/.env.production
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
+*.iws
+.classpath
+.project
+.settings/
+
+# Java
+*.class
+*.jar
+*.war
+
+# Vite / TypeScript
+*.tsbuildinfo
