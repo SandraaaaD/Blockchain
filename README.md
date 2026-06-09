@@ -1,23 +1,82 @@
 # EscrowPay - Freelance Milestone Escrow Platform
 
+## Problem Statement and Motivation
+
+In today’s freelance industry, there are significant trust issues between clients and developers. The idea for this project originated from the common problems that both sides frequently face in real-world collaborations.
+
+On one hand, freelancers are often at risk of not being paid for their work. Clients may delay payments, refuse to pay after the work is delivered, or disappear altogether after receiving the final product. This creates uncertainty and discourages many skilled developers from working on freelance platforms.
+
+On the other hand, clients also face risks. A freelancer may receive payment but fail to deliver the expected quality of work, miss deadlines, or not complete the project according to the agreed requirements. In such cases, clients lose both time and money without a reliable way to enforce accountability.
+
+Because of these challenges, there is a clear need for a system that protects both parties equally and ensures fairness, transparency, and trust throughout the collaboration process.
+
+## Our Solution
+
+To address these issues, we designed a platform that introduces a structured, milestone-based workflow combined with escrow protection and AI-assisted validation.
+
+## Project Workflow
+
+The system is designed to connect developers and clients in a structured, transparent, and secure way using milestone-based collaboration and blockchain-backed payments.
+
+### 1. Project Creation & Invitation
+- Developer creates a new project  
+- Developer invites a client via email  
+- Client receives the invitation  
+
+### 2. Invitation Handling
+- Client can:
+  - Accept the invitation → joins the project  
+  - Decline the invitation → process ends  
+
+### 3. Communication
+- After acceptance, both parties are connected  
+- An integrated chat system becomes available  
+- Developer and client discuss:
+  - Requirements  
+  - Expectations  
+  - Project scope and progress  
+
+### 4. Requirements & Milestones
+- Developer defines project requirements  
+- Project is divided into milestones  
+- Each milestone includes:
+  - Tasks  
+  - Acceptance criteria (definition of “done”)  
+
+### 5. Escrow Funding (Blockchain)
+- Client funds the project via escrow  
+- Payment is secured using MetaMask / blockchain module  
+- Funds are locked until milestone approval  
+
+### 6. Development & Submission
+- Developer works milestone by milestone  
+- For each milestone, developer submits:
+  - GitHub repository link  
+  - Demo link (if available)  
+  - Additional files or documentation  
+
+### 7. Review Process
+- Client reviews submitted milestone  
+- Client can:
+  - Approve → milestone is accepted and payment is released  
+  - Decline → milestone is rejected  
+
+### 8. AI-Assisted Dispute Resolution
+- If there is disagreement:
+  - AI evaluates the milestone  
+- AI outcomes:
+  - **AI_APPROVED** → payment is released  
+  - **AI_REJECTED** → developer must revise and resubmit  
+
+### 9. Project Completion
+- Process repeats for all milestones  
+- When final milestone is approved:
+  - Project status becomes **COMPLETED**  
+  - Both client and developer can leave reviews
 ## Stack
 - **Frontend**: React 18 + TypeScript + Vite + TailwindCSS
 - **Backend (recommended, simplest)**: **Node.js + Express** 
 - **Database**: PostgreSQL
-
-## Project Flow
-1. Developer creates a project and invites client (by email)
-2. Client accepts/declines the invitation
-3. Chat between developer and client
-4. Developer defines requirements
-5. Developer creates milestones with acceptance criteria
-6. Client funds escrow (MetaMask / blockchain - separate module)
-7. Developer submits each milestone (GitHub, demo link, files)
-8. Client reviews: Approve → payment released | Decline → AI review
-9. AI decision: AI_APPROVED → payment released | AI_REJECTED → developer fixes
-10. When all milestones complete → Project COMPLETED → Reviews
-
----
 
 ## Setup
 
@@ -31,7 +90,7 @@
 CREATE DATABASE escrow_db;
 ```
 
-### Backend (найедноставно — препорачано)
+### Backend (наjедноставно — препорачано)
 
 Копијај конфигурација и промени postgres password:
 
