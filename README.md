@@ -2,8 +2,7 @@
 
 ## Stack
 - **Frontend**: React 18 + TypeScript + Vite + TailwindCSS
-- **Backend (recommended, simplest)**: **Node.js + Express** → `backend-node` (нема Maven)
-- **Backend (alternate)**: Spring Boot 3 во `backend` (има потреба од Maven/Java)
+- **Backend (recommended, simplest)**: **Node.js + Express** 
 - **Database**: PostgreSQL
 
 ## Project Flow
